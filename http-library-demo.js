@@ -10,3 +10,12 @@
 
 const http = require('http')
 
+const myServer = http.createServer()
+
+myServer.on('request', (req, res) => {
+  console.log('request received')
+})
+
+myServer.listen(8080, () => {
+  console.log('server running on http://localhost:8080')
+})
