@@ -10,3 +10,11 @@
 
 console.log('演示打印module模块信息：')
 console.log(module)
+
+module.exports.name = 'Yoona'
+
+module.exports = {
+    girlfriend: '张敏洁'
+}
+
+module.exports.master = 'Yoona Lim'
