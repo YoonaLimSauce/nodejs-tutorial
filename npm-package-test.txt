@@ -1,0 +1,9 @@
+package.json 必要属性
+*** name: 包名
+*** version: 版本号
+*** main: 入口文件
+description: 包描述
+keywords: 关键字
+scripts: 运行脚本命令
+author: 作者
+license: 许可证 default: ISC
