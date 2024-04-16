@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@types/node": "^20.12.7",
     "express": "^4.19.2",
     "i5ting_toc": "^1.1.5"
   }
