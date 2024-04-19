@@ -16,8 +16,13 @@ app.use((req, res, next) => {
     })
 })
 
-app.post('/user', (req, res) => {
-    res.send(req.body)
+app.get('/user', (req, res) => {
+    const body = req.body
+    res.send({
+        status: 0,
+        msg: 'POST请求成功',
+        data: body
+    })
 })
 
 app.listen(3000, () => {
