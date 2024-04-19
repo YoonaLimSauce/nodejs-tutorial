@@ -25,6 +25,15 @@ app.get('/user', (req, res) => {
     })
 })
 
+app.post('/user', (req, res) => {
+    const body = req.body
+    res.send({
+        status: 0,
+        msg: 'POST请求成功',
+        data: body
+    })
+})
+
 app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000')
 })
