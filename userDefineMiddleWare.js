@@ -11,14 +11,13 @@ app.use((req, res, next) => {
 
     req.on('end', () => {
         const body = qs.parse(str)
-        console.log(body)
+        req.body = body
+        next()
     })
-
-    next()
 })
 
 app.post('/user', (req, res) => {
-    res.send('Hello World')
+    res.send(req.body)
 })
 
 app.listen(3000, () => {
