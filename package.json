@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@types/node": "^20.12.7",
+    "cors": "^2.8.5",
     "express": "^4.19.2",
     "i5ting_toc": "^1.1.5"
   }
