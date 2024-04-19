@@ -1,4 +1,5 @@
 const express = require('express')
+const qs = require('querystring')
 
 const app = express()
 
@@ -9,7 +10,8 @@ app.use((req, res, next) => {
     })
 
     req.on('end', () => {
-        console.log(str)
+        const body = qs.parse(str)
+        console.log(body)
     })
 
     next()
