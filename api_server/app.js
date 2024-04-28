@@ -8,10 +8,12 @@
  */
 const express = require('express')
 const cors = require('cors')
+const userRouter = require('./router/user')
 
 const app = express()
 app.use(cors())
 app.use(express.urlencoded({ extended: false }))    // 解析 application/x-www-form-urlencoded 格式的请求体数据
+app.use('/api', userRouter)
 
 app.listen(8000, () => {
     console.log('api server is running at http://localhost:8000')
