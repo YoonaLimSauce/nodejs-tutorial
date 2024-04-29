@@ -9,33 +9,27 @@ module.exports.regUser = (req, res) => {
     const userinfo = req.body
 
     if (!userinfo.username || !userinfo.password) {
-        res.send({ status: 1, msg: '用户名和密码不能为空' })
-        return
+        return res.send({ status: 1, msg: '用户名和密码不能为空' })
     }
 
     db.query(sqlStr_user_existed, userinfo.username, (err, results) => {
         if (err) {
-            res.send({ status: 1, msg: err.message })
-            return
+            return res.send({ status: 1, msg: err.message })
         }
         if (results.length > 0) {
-            res.send({ status: 1, msg: '用户名已存在' })
-            return
+            return res.send({ status: 1, msg: '用户名已存在' })
         }
 
         userinfo.password = bcrypt.hashSync(userinfo.password, 10)
 
         db.query(sqlStr_user_insert, { username: userinfo.username, password: userinfo.password }, (err, results) => {
             if (err) {
-                res.send({ status: 1, msg: err.message })
-                return
+                return res.send({ status: 1, msg: err.message })
             }
             if (results.affectedRows !== 1) {
-                res.send({ status: 1, msg: '注册用户失败' })
-                return
+                return res.send({ status: 1, msg: '注册用户失败' })
             }
             res.send({ status: 0, msg: '注册用户成功' })
-            return
         })
     })
 
