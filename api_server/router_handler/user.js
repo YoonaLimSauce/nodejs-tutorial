@@ -1,4 +1,6 @@
+const { userInfo } = require('os')
 const db = require('../db/index')
+const bcrypt = require('bcryptjs')
 
 const sqlStr_user_existed = `select * from ev_users where username=?`
 
@@ -17,6 +19,10 @@ module.exports.regUser = (req, res) => {
             return res.send({ status: 1, msg: '用户名已存在' })
         }
     })
+
+    console.log(userinfo)
+    userinfo.password = bcrypt.hashSync(userinfo.password, 10)
+    console.log(userinfo)
 }
 
 module.exports.login = (req, res) => {
