@@ -32,5 +32,16 @@ module.exports.regUser = (req, res) => {
 }
 
 module.exports.login = (req, res) => {
-    res.send('请求响应函数已分离，login OK')
+    const userinfo = req.body
+
+    db.query(sqlStr_user_existed, [userinfo.username], (err, results) => {
+        if (err) {
+            return res.cc(err)
+        }
+        if (results.length !== 1) {
+            return res.cc('登录失败，用户不存在')
+        }
+
+        res.cc('登录成功', 0)
+    })
 }
