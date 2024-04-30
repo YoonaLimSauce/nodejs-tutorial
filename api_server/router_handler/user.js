@@ -42,6 +42,11 @@ module.exports.login = (req, res) => {
             return res.cc('登录失败，用户不存在')
         }
 
+        const compareResult = bcrypt.compareSync(userinfo.password, results[0].password)
+        if (!compareResult) {
+            return res.cc('登录失败，密码错误')
+        }
+
         res.cc('登录成功', 0)
     })
 }
