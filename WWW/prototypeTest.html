@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>
+    测试JavaScript原型prototype
+</title>
+</head>
+<body>
+<img src="prototype_succeed.png" alt="JavaScript继承" width="480px">
+<script>
+    function Student1(name){
+        this.name = name;
+        this.hello = function(){
+            console.log('hello,'+this.name);
+        };
+    }
+    function PrimaryStudent1(props){
+        Student1.call(this,props);
+        this.grade = props.grade || 1;
+    }
+    PrimaryStudent1.prototype = new Student1();
+    PrimaryStudent1.prototype.consturctor = PrimaryStudent1;
+
+    var test1 = new PrimaryStudent1({grade: 90});
+    console.log('使用prototype = new Student1()：\n', test1)
+
+    function PrimaryStudent2(props){
+        Student1.call(this,props);
+        this.grade = props.grade || 1;
+    }
+    function F() {}
+    F.prototype = Student1.prototype
+    PrimaryStudent2.prototype = new F();
+    PrimaryStudent2.prototype.consturctor = PrimaryStudent2;
+
+    var test2 = new PrimaryStudent2({grade: 80})
+    console.log('使用prototype = new F()：\n', test2)
+</script>
+</body>
+</html>
