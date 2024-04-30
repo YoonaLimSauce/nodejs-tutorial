@@ -4,6 +4,7 @@
         "escook",
         "expressjwt",
         "getinfo",
+        "jwtsecret",
         "koro",
         "mydatabase",
         "mydatatable",

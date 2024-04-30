@@ -1,6 +1,15 @@
-const { userInfo } = require('os')
+/*
+ * @Author: Yoona Lim miraclefishleong@gmail.com
+ * @Date: 2024-04-28 22:33:39
+ * @LastEditors: Yoona Lim miraclefishleong@gmail.com
+ * @LastEditTime: 2024-05-01 07:20:23
+ * @FilePath: \node-js-demo\api_server\router_handler\user.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 const db = require('../db/index')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const config = require('../config')
 
 const sqlStr_user_existed = `select * from ev_users where username=?`
 const sqlStr_user_insert = `insert into ev_users set ?`
@@ -47,6 +56,8 @@ module.exports.login = (req, res) => {
             return res.cc('登录失败，密码错误')
         }
 
-        res.cc('登录成功', 0)
+        const user = { ...results[0], password: '', user_pic: '' }
+        const tokenStr = jwt.sign(user, config.jwtsecretKey, { expiresIn: config.expiresIn })
+        res.send({ status: 0, message: '登录成功', token: 'Bearer ' + tokenStr })
     })
 }
