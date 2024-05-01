@@ -1,6 +1,7 @@
 const db = require('../db/index');
 
-const sqlStr_userinfo_existed = `select id, username, nickname, email, user_pic from ev_users where id = ?`;
+const userinfo_property = ['id', 'username', 'nickname', 'email', 'user_pic'];
+const sqlStr_userinfo_existed = `select ${userinfo_property.join(', ')} from ev_users where id = ?`;
 
 module.exports.getUserInfo = (req, res) => {
     db.query(sqlStr_userinfo_existed, [req.auth.id], (err, results) => {
