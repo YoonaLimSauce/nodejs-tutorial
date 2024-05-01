@@ -61,3 +61,16 @@ module.exports.updatePassword = (req, res) => {
         });
     });
 }
+
+module.exports.updateAvatar = (req, res) => {
+    const sqlStr_update_useravatar = `update ev_users set user_pic = ? where id = ?`;
+    db.query(sqlStr_update_useravatar, [req.body.avatar, req.auth.id], (err, results) => {
+        if (err) {
+            return res.cc(err);
+        }
+        if (results.affectedRows !== 1) {
+            return res.cc('更新头像失败');
+        }
+        res.cc('更新头像成功', 0);
+    });
+}
