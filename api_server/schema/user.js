@@ -21,3 +21,10 @@ module.exports.update_userinfo_schema = {
     email: email
   }
 }
+
+module.exports.update_password_schema = {
+  body: {
+    old_password: password,
+    new_password: joi.not(joi.ref('old_password')).concat(password)
+  }
+}
