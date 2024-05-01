@@ -33,5 +33,13 @@ module.exports.updateUserInfo = (req, res) => {
 }
 
 module.exports.updatePassword = (req, res) => {
-    res.send('updatePassword')
+    db.query(sqlStr_userinfo_existed, [req.auth.id], (err, results) => {
+        if (err) {
+            return res.cc(err);
+        }
+        if (results.length !== 1) {
+            return res.cc('获取用户信息失败');
+        }
+        res.send('收到');
+    });
 }
