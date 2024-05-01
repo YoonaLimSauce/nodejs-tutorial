@@ -1,8 +1,10 @@
 const db = require('../db/index');
+const bcrypt = require('bcryptjs');
 
 const userinfo_property = ['id', 'username', 'nickname', 'email', 'user_pic'];
 const sqlStr_userinfo_existed = `select ${userinfo_property.join(', ')} from ev_users where id = ?`;
 const sqlStr_userinfo_update = `update ev_users set ? where id = ?`;
+const sqlStr_userpassword_existed = `select * from ev_users where id = ?`;
 
 module.exports.getUserInfo = (req, res) => {
     db.query(sqlStr_userinfo_existed, [req.auth.id], (err, results) => {
@@ -33,13 +35,19 @@ module.exports.updateUserInfo = (req, res) => {
 }
 
 module.exports.updatePassword = (req, res) => {
-    db.query(sqlStr_userinfo_existed, [req.auth.id], (err, results) => {
+    db.query(sqlStr_userpassword_existed, [req.auth.id], (err, results) => {
         if (err) {
             return res.cc(err);
         }
         if (results.length !== 1) {
             return res.cc('获取用户信息失败');
         }
-        res.send('收到');
+
+        const compareResult = bcrypt.compareSync(req.body.old_password, results[0].password);
+        if (!compareResult) {
+            return res.cc('原密码错误');
+        }
+
+        res.send('hhh')
     });
 }
