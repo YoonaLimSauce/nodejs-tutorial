@@ -21,7 +21,7 @@ module.exports.getUserInfo = (req, res) => {
 }
 
 module.exports.updateUserInfo = (req, res) => {
-    db.query(sqlStr_userinfo_update, [req.body, req.auth.id], (err, results) => {
+    db.query(sqlStr_userinfo_update, [req.body, req.body.id], (err, results) => {
         if (err) {
             return res.cc(err);
         }
