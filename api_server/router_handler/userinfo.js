@@ -5,6 +5,7 @@ const userinfo_property = ['id', 'username', 'nickname', 'email', 'user_pic'];
 const sqlStr_userinfo_existed = `select ${userinfo_property.join(', ')} from ev_users where id = ?`;
 const sqlStr_userinfo_update = `update ev_users set ? where id = ?`;
 const sqlStr_userpassword_existed = `select * from ev_users where id = ?`;
+const sqlStr_update_userpassword = `update ev_users set password = ? where id = ?`;
 
 module.exports.getUserInfo = (req, res) => {
     db.query(sqlStr_userinfo_existed, [req.auth.id], (err, results) => {
@@ -48,6 +49,15 @@ module.exports.updatePassword = (req, res) => {
             return res.cc('原密码错误');
         }
 
-        res.send('hhh')
+        const newPwd = bcrypt.hashSync(req.body.new_password, 10);
+        db.query(sqlStr_update_userpassword, [newPwd, req.auth.id], (err, results) => {
+            if (err) {
+                return res.cc(err);
+            }
+            if (results.affectedRows !== 1) {
+                return res.cc('更新密码失败');
+            }
+            res.cc('更新密码成功', 0);
+        });
     });
 }
