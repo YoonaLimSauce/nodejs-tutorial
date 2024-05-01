@@ -2,6 +2,7 @@ const db = require('../db/index');
 
 const userinfo_property = ['id', 'username', 'nickname', 'email', 'user_pic'];
 const sqlStr_userinfo_existed = `select ${userinfo_property.join(', ')} from ev_users where id = ?`;
+const sqlStr_userinfo_update = `update ev_users set ? where id = ?`;
 
 module.exports.getUserInfo = (req, res) => {
     db.query(sqlStr_userinfo_existed, [req.auth.id], (err, results) => {
@@ -20,5 +21,13 @@ module.exports.getUserInfo = (req, res) => {
 }
 
 module.exports.updateUserInfo = (req, res) => {
-    res.send('updateUserInfo')
+    db.query(sqlStr_userinfo_update, [req.body, req.auth.id], (err, results) => {
+        if (err) {
+            return res.cc(err);
+        }
+        if (results.affectedRows !== 1) {
+            return res.cc('更新用户信息失败');
+        }
+        res.cc('更新用户信息成功', 0);
+    });
 }
