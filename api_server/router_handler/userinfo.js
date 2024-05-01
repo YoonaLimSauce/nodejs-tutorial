@@ -18,3 +18,7 @@ module.exports.getUserInfo = (req, res) => {
         });
     });
 }
+
+module.exports.updateUserInfo = (req, res) => {
+    res.send('updateUserInfo')
+}
